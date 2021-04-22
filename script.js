@@ -38,3 +38,16 @@ function displayLibrary() {
 
 //addBookToLibrary();
 //displayLibrary();
+
+
+const checkButtons = document.querySelectorAll('.check');
+checkButtons.forEach(button => button.addEventListener('click', function(e) {
+    console.log(e);
+    console.log(e.target.getAttribute('src'));
+    if (e.target.getAttribute('src') == "images/unchecked.png") {
+        console.log("yup");
+        e.target.setAttribute('src', "images/check.png");
+    } else {
+        e.target.setAttribute('src', "images/unchecked.png");
+    }
+}));

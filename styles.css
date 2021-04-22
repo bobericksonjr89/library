@@ -1,5 +1,76 @@
-.card {
-    background-color: #e4d7cf;
+html {
+    --color-light-card: #e4d7cf;
+    --color-dark-card: #bfaea7;
+    --color-stamp-red: #b90804;
+    --color-text-black: #110600;
 }
-#e4d7cf
-#dacec2;
+
+.card {
+    margin: 1em;
+
+    padding: 1em .2em 2em 0;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 600;
+    color: var(--color-text-black);
+    width: 30em;
+    height: 12em;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background: linear-gradient(to top left, var(--color-dark-card), var(--color-light-card) 70%),
+                linear-gradient(to bottom right, var(--color-dark-card), var(--color-light-card) 70%),
+                linear-gradient(to top right, var(--color-dark-card), var(--color-light-card) 70%);
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.author {
+    margin-left: .4em;
+    font-weight: inherit;
+}
+
+.sub-field {
+    height: 100%;
+    margin-left: 2em;
+    margin-right: 1em;
+    font-weight: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.title {
+    font-weight: inherit;
+}
+
+.pages{
+    font-weight: inherit;
+}
+
+
+.stamps-area {
+    width: 15em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.date {
+    margin-top: 2em;
+    color: var(--color-stamp-red);
+    font-weight: 1000;
+    transform: rotate(15deg);
+}
+
+.read {
+    align-self: center;
+}
+
+.check {
+    height: 2.5em;
+    cursor: pointer;
+}
