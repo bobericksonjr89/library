@@ -101,6 +101,12 @@ button:hover,
                 linear-gradient(to top right, var(--color-dark-card), var(--color-light-card) 70%);
     display: flex;
     justify-content: space-between;
+
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+
 }
 
 .text-area {
@@ -151,6 +157,7 @@ button:hover,
     left: 7.2em;
     bottom: .7em;
     height: 1.5em;
+    cursor: pointer;
 }
 
 .date {
@@ -253,4 +260,34 @@ legend {
     margin-top: 1.5em;
     width: 8em;
     align-self: center;
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+        width: 30em;
+        height: 12em;
+        margin: 1em;
+        line-height: inherit;
+        padding: 1em .2em 2em 0;
+    }
+
+    75% {
+        opacity: 0;
+        width: 30em;
+        height: 12em;
+        margin: 1em;
+        line-height: inherit;
+        padding: 1em .2em 2em 0;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        width: 0;
+        line-height: 0;
+        padding: 0;
+        margin: 0;
+
+    }
 }

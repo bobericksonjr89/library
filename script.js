@@ -63,6 +63,7 @@ function displayLibrary() {
         const main = document.querySelector('#card-main');
         const cardDiv = document.createElement('div');
         cardDiv.className = "card";
+        cardDiv.dataset.index = myLibrary[i].title;
         const textAreaDiv = document.createElement('div');
         textAreaDiv.className = "text-area";
         const stampsAreaDiv = document.createElement('div');
@@ -79,11 +80,13 @@ function displayLibrary() {
 
         const deleteImage = document.createElement('img');
         deleteImage.className = "delete-img";
+        deleteImage.dataset.index = myLibrary[i].title;
+        deleteImage.addEventListener('click', deleteBook);
         deleteImage.setAttribute('src', "images/delete.png");
 
         const imageElement = document.createElement('img');
         imageElement.className = "check";
-        imageElement.dataset.index = i;
+        imageElement.dataset.index = myLibrary[i].title;
         imageElement.addEventListener('click', updateReadStatus);
         console.log(imageElement);
         if (myLibrary[i].isRead === false) {
@@ -110,8 +113,34 @@ function displayLibrary() {
 }
 
 //addBookToLibrary();
-displayLibrary();
 
+function updateReadStatus(e) {
+    const title = e.target.dataset.index;
+    const book = myLibrary.find(book => book.title === title)
+    if (e.target.getAttribute('src') == "images/unchecked.png") {
+        e.target.setAttribute('src', "images/check.png");
+        book.isRead = true;
+    } else {
+        e.target.setAttribute('src', "images/unchecked.png");
+        book.isRead = false;
+    }
+}
+
+function deleteBook(e) {
+    const title = e.target.dataset.index;
+    const book = myLibrary.find(book => book.title === title);
+    const index = myLibrary.indexOf(book);
+    if (confirm(`Do you want to delete ${book.title}?`)) {
+        myLibrary.splice(index, 1);
+        const card = document.querySelector(`.card[data-index="${title}"]`);
+        card.style.animationPlayState ='running';
+        card.addEventListener('animationend', () => {
+            card.remove();
+            console.log(myLibrary);
+        })
+        console.log(myLibrary);
+    } 
+}
 
 const addButton = document.querySelector('#add-button');
 addButton.addEventListener('click', function(e) {
@@ -126,18 +155,4 @@ addButton.addEventListener('click', function(e) {
     }
 })
 
-
-
-function updateReadStatus(e) {
-    const index = e.target.dataset.index;
-    if (e.target.getAttribute('src') == "images/unchecked.png") {
-        e.target.setAttribute('src', "images/check.png");
-        myLibrary[index].isRead = true;
-        console.log(myLibrary[index]);
-    } else {
-        e.target.setAttribute('src', "images/unchecked.png");
-        myLibrary[index].isRead = false;
-        console.log(myLibrary[index]);
-    }
-}
-
+displayLibrary();
