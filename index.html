@@ -9,21 +9,88 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="card">
-        <div class="text-area">
-            <p class="author">Author Field</p>
-            <div class="sub-field">
-                <p class="title">Title of The Book Goes Here and what if it's really long</p>
-                <p class="pages">316 p.</p>
+    <header>
+        <h1>Bibliographic Bookkeeping Bureau</h1>
+    </header>
+    <main>
+        <div id="add-container">
+            <img src="images/cabinet.png" alt="Old-school card catelog cabinet" id="cabinet">
+            <button id="add-button">Add Book</button>
+        </div>
+        <div id="card-main">
+            <div class="card">
+                <div class="text-area">
+                    <p class="author">Author Field</p>
+                    <div class="sub-field">
+                        <p class="title">Title of The Book Goes Here and what if it's really long</p>
+                        <p class="pages">316 p.</p>
+                        <p class="genre">Fiction</p>
+                    </div>
+                </div>
+                <div class="stamps-area">
+                    <div class="delete">
+                        <img class="delete-img" src="images/delete.png">
+                    </div>
+                    <div class="date">Janurary 22, 2021</div>
+                    <div class="read">
+                        <img class="check" src="images/unchecked.png">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="stamps-area">
-            <div class="date">Janurary 22, 2021</div>
-            <div class="read">
-                <img class="check" src="images/unchecked.png">
-            </div>
+        <div id="form-main">
+            <h2 id="form-header">Add a Book</h2>
+            <form>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" placeholder="The Sun Also Rises" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" placeholder="Ernest Hemingway" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pages">Page Count:</label>
+                    <input type="number" name="pages" placeholder="266" min="0" max="10000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="genre">Genre:</label>
+                    <select name="genre" id="dropdown">
+                        <option value="art">Art</option>
+                        <option value="biography">Biography</option>
+                        <option value="business">Business</option>
+                        <option value="fiction" selected>Fiction</option>
+                        <option value="history">History</option>
+                        <option value="home">Home</option>
+                        <option value="philosophy">Philosophy</option>
+                        <option value="poetry">Poetry</option>
+                        <option value="psychology">Psychology</option>
+                        <option value="religion">Religion</option>
+                        <option value="science">Science</option>
+                        <option value="sociology">Sociology</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                </div>
+
+                <fieldset>
+                    <legend>Have you read it?</legend>
+                    <div class="fieldset-element">
+                        <input id="true" type="radio" name="read" value="true" required>
+                        <label for="true">Yes</label>
+                    </div>
+                    <div class="fieldset-element">
+                        <input id="false" type="radio" name="read" value="false">
+                        <label for="false">No</label>
+                    </div>
+                </fieldset>
+
+                <input type="submit" value="Submit" id="submit-button">
+            </form>
         </div>
-    </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
