@@ -1,16 +1,6 @@
 let myLibrary = [];
 myLibrary.push(new Book("Hunger Games", "Suzanne Collins", 374, "Fiction", true))
 myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
 
 
 // constructor
@@ -32,87 +22,111 @@ Book.prototype.info = function() {
     return `${title} by ${author}, ${pages} pages, ${isRead ? 'read already' : 'not read yet'}.`
 }
 
-function addBookToLibrary() {
-    let title = prompt("What is the title?");
-    let author = prompt("Who is the author?");
-    let pages = Number(prompt("How many pages?"));
-    let isRead = prompt("True or false: I have read the book.")
-    let newBook = new Book(title, author, pages, isRead);
+function readForm() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = e.target[1].value;
+        const author = e.target[0].value;
+        const pages = e.target[2].value;
+        const genre = e.target[3].value;
+        let isRead;
+        console.log(e);
+        if (e.target[4].checked === true) {
+            isRead = true;
+        } else {
+            isRead = false;
+        }
+        console.log(title, author, pages, genre, isRead)
+        addBookToLibrary(title, author, pages, genre, isRead);
+        form.reset();
+        swapPages();
+    });
+}
+
+function addBookToLibrary(title, author, pages, genre, isRead) {
+    const newBook = new Book(title, author, pages, genre, isRead);
     myLibrary.push(newBook);
+    displayBook(newBook);
  }
 
 function displayLibrary() {
     for (let i = 0; i < myLibrary.length; i++) {
         // create elements and assign classes/src
-        const author = document.createElement('p');
-        author.textContent = myLibrary[i].author;
-        author.className = "author";
-        
-        const title = document.createElement('p');
-        title.textContent = myLibrary[i].title;
-        title.className = "title";
-
-        const pages = document.createElement('p');
-        pages.textContent = `${myLibrary[i].pages} p.`;
-        pages.className = "pages";
-
-        const genre = document.createElement('p');
-        genre.textContent = myLibrary[i].genre;
-        genre.className = "genre";
-
-        const main = document.querySelector('#card-main');
-        const cardDiv = document.createElement('div');
-        cardDiv.className = "card";
-        cardDiv.dataset.index = myLibrary[i].title;
-        const textAreaDiv = document.createElement('div');
-        textAreaDiv.className = "text-area";
-        const stampsAreaDiv = document.createElement('div');
-        stampsAreaDiv.className = "stamps-area";
-        const deleteDiv = document.createElement('div');
-        deleteDiv.className = "delete";
-        const subFieldDiv = document.createElement('div');
-        subFieldDiv.className = "sub-field";
-        const dateDiv = document.createElement('div');
-        dateDiv.className = "date";
-        dateDiv.textContent = myLibrary[i].dateEntered();
-        const readDiv = document.createElement('div');
-        readDiv.className = "read";
-
-        const deleteImage = document.createElement('img');
-        deleteImage.className = "delete-img";
-        deleteImage.dataset.index = myLibrary[i].title;
-        deleteImage.addEventListener('click', deleteBook);
-        deleteImage.setAttribute('src', "images/delete.png");
-
-        const imageElement = document.createElement('img');
-        imageElement.className = "check";
-        imageElement.dataset.index = myLibrary[i].title;
-        imageElement.addEventListener('click', updateReadStatus);
-        console.log(imageElement);
-        if (myLibrary[i].isRead === false) {
-            imageElement.setAttribute('src', "images/unchecked.png");
-        } else {
-            imageElement.setAttribute('src', "images/check.png");
-        }   
-        
-        // throw it all together
-        main.appendChild(cardDiv);
-        cardDiv.appendChild(textAreaDiv);
-        cardDiv.appendChild(stampsAreaDiv);
-        textAreaDiv.appendChild(author);
-        textAreaDiv.appendChild(subFieldDiv);
-        subFieldDiv.appendChild(title);
-        subFieldDiv.appendChild(pages);
-        subFieldDiv.appendChild(genre);
-        stampsAreaDiv.appendChild(deleteDiv);
-        deleteDiv.appendChild(deleteImage);
-        stampsAreaDiv.appendChild(dateDiv);
-        stampsAreaDiv.appendChild(readDiv);
-        readDiv.appendChild(imageElement);
+        displayBook(myLibrary[i]);
     }
 }
 
-//addBookToLibrary();
+function displayBook(book) {
+    const author = document.createElement('p');
+    author.textContent = book.author;
+    author.className = "author";
+    
+    const title = document.createElement('p');
+    title.textContent = book.title;
+    title.className = "title";
+
+    const pages = document.createElement('p');
+    pages.textContent = `${book.pages} p.`;
+    pages.className = "pages";
+
+    const genre = document.createElement('p');
+    genre.textContent = book.genre;
+    genre.className = "genre";
+
+    const main = document.querySelector('#card-main');
+    const cardDiv = document.createElement('div');
+    cardDiv.className = "card";
+    cardDiv.classList.add('book-card');
+    cardDiv.dataset.index = book.title;
+    const textAreaDiv = document.createElement('div');
+    textAreaDiv.className = "text-area";
+    const stampsAreaDiv = document.createElement('div');
+    stampsAreaDiv.className = "stamps-area";
+    const deleteDiv = document.createElement('div');
+    deleteDiv.className = "delete";
+    const subFieldDiv = document.createElement('div');
+    subFieldDiv.className = "sub-field";
+    const dateDiv = document.createElement('div');
+    dateDiv.className = "date";
+    dateDiv.textContent = book.dateEntered();
+    const readDiv = document.createElement('div');
+    readDiv.className = "read";
+
+    const deleteImage = document.createElement('img');
+    deleteImage.className = "delete-img";
+    deleteImage.dataset.index = book.title;
+    deleteImage.addEventListener('click', deleteBook);
+    deleteImage.setAttribute('src', "images/delete.png");
+
+    const imageElement = document.createElement('img');
+    imageElement.className = "check";
+    imageElement.dataset.index = book.title;
+    imageElement.addEventListener('click', updateReadStatus);
+
+    if (book.isRead === false) {
+        imageElement.setAttribute('src', "images/unchecked.png");
+    } else {
+        imageElement.setAttribute('src', "images/check.png");
+    }   
+    
+    // throw it all together
+    main.appendChild(cardDiv);
+    cardDiv.appendChild(textAreaDiv);
+    cardDiv.appendChild(stampsAreaDiv);
+    textAreaDiv.appendChild(author);
+    textAreaDiv.appendChild(subFieldDiv);
+    subFieldDiv.appendChild(title);
+    subFieldDiv.appendChild(pages);
+    subFieldDiv.appendChild(genre);
+    stampsAreaDiv.appendChild(deleteDiv);
+    deleteDiv.appendChild(deleteImage);
+    stampsAreaDiv.appendChild(dateDiv);
+    stampsAreaDiv.appendChild(readDiv);
+    readDiv.appendChild(imageElement);
+}
+
+
 
 function updateReadStatus(e) {
     const title = e.target.dataset.index;
@@ -143,16 +157,30 @@ function deleteBook(e) {
 }
 
 const addButton = document.querySelector('#add-button');
-addButton.addEventListener('click', function(e) {
-    if (e.target.textContent === "Add Book") {
-        e.target.textContent = "See Books";
+addButton.addEventListener('click', swapPages); 
+
+function swapPages() {
+    if (addButton.textContent === "Add Book") {
+        addButton.textContent = "See Books";
         document.querySelector("#card-main").style.display = "none";
         document.querySelector('#form-main').style.display = "flex";
     } else {
-        e.target.textContent = "Add Book";
+        addButton.textContent = "Add Book";
         document.querySelector("#card-main").style.display = "flex";
         document.querySelector('#form-main').style.display = "none";
+    }
+}
+
+// check button on form
+const readLabel = document.querySelector('#read-label');
+readLabel.addEventListener('click', (e) => {
+    let readImg = readLabel.childNodes[1];
+    if (readImg.getAttribute('src') == "images/unchecked.png") {
+        readImg.setAttribute('src', "images/check.png");
+    } else {
+        readImg.setAttribute('src', "images/unchecked.png");
     }
 })
 
 displayLibrary();
+readForm();

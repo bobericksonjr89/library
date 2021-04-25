@@ -34,6 +34,7 @@ header h1 {
 main {
     display: flex;
     margin-top: 5.5em;
+    width: 100%;
 }
 
 #add-container {
@@ -86,14 +87,9 @@ button:hover,
 }
 
 .card {
-    margin: 1em;
-
-    padding: 1em .2em 2em 0;
     font-family:'Courier New', Courier, monospace;
     font-weight: 600;
     color: var(--color-text-black);
-    width: 30em;
-    height: 12em;
     border: 1px solid transparent;
     border-radius: 2px;
     background: linear-gradient(to top left, var(--color-dark-card), var(--color-light-card) 70%),
@@ -101,12 +97,25 @@ button:hover,
                 linear-gradient(to top right, var(--color-dark-card), var(--color-light-card) 70%);
     display: flex;
     justify-content: space-between;
+}
+
+.form-card {
+    padding: 0 1.4em 4em .2em;
+    margin: 4em;
+    width: 45em;
+    height: 18em;
+}
+
+.book-card {
+    padding: 1em .2em 2em 0;
+    margin: 1em;
+    width: 30em;
+    height: 12em;
 
     animation-name: hide;
     animation-duration: 2s;
     animation-fill-mode: forwards;
     animation-play-state: paused;
-
 }
 
 .text-area {
@@ -182,13 +191,8 @@ button:hover,
     margin-left: 22em;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
+    margin: 0 auto 0 25em;
     width: 50em;
-}
-
-#form-header{
-    margin: 1em 0;
-    font-size: 2.5em;
 }
 
 #form-main form {
@@ -200,11 +204,26 @@ button:hover,
 }
 
 .form-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1.5em;
-
+    margin-top: 1em;
     font-size: 1.5em
+}
+
+#form-title,
+#form-pages {
+    margin-left: 2em;
+}
+
+#form-pages {
+    width: 5em;
+}
+
+#form-pages-p {
+    display: inline;
+}
+
+#dropdown {
+    margin-left: 3em;
+    width: 10em;
 }
 
 [type=text],
@@ -214,7 +233,7 @@ select {
     border-radius: 1em;
     font-family: 'Courier New', Courier, monospace;
     font-size: inherit;
-    width: 25em;
+    width: 20em;
     outline: none;
     border-color: var(--color-dark-card);
     border-style: solid;
@@ -228,36 +247,42 @@ select:focus {
     box-shadow: 0 0 5px 5px var(--color-dark-card);
 }
 
-fieldset {
-    border:none;
-    margin: 1.5em 0 0 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    padding-block-start: 0;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    padding-block-end: 0;
-    min-inline-size: min-content;
-
-    display: flex;
+#bottom-group {
+    display:flex;
     justify-content: space-between;
 }
 
-legend {
-    font-size: 1.5em;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    float: left;
-}
-
-.fieldset-element {
+.form-read {
     font-family: inherit;
     font-size: 1.5em;
-    margin-right: 4em;
+    margin-right: 5em;
+    align-self: flex-end;
+    display: flex;
+}
+
+.form-read label {
+    cursor: pointer;
+    align-self: center;
+}
+
+#read-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 8em;
+}
+
+#label-img {
+    height: 3em;
+    padding-bottom: .5em;
+}
+
+.form-read input[type="checkbox"] {
+    display: none;
 }
 
 #submit-button {
-    margin-top: 1.5em;
+    margin-top: 3em;
     width: 8em;
     align-self: center;
 }
@@ -290,4 +315,74 @@ legend {
         margin: 0;
 
     }
+}
+
+@media only screen and (max-width: 1380px) {
+    #form-main {
+        margin-left: 22em;
+    }
+
+    .form-card {
+        margin: 4em .5em;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    header h1 {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    html {
+        width: 100%;
+        min-width: 375px;
+    }
+
+
+    main {
+        flex-direction: column;
+
+    }
+
+    #add-container {
+        position: initial;
+        border-right: none;
+        min-width: 0;
+        height: 100%;
+
+    }
+
+    #cabinet {
+        padding-top: 2em;
+        margin: 1em;
+        width: 10em;
+    }
+
+    #card-main {
+        margin-left: 0;
+        justify-content: center;
+    }
+
+    .delete-img {
+        left: 4.2em;
+    }
+
+    #form-main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .form-card {
+        width: 100%;
+        font-size: 1em;
+    }
+
+    [type=text] {
+        width: 12em;
+    }
+
+    #bottom-group {
+        flex-direction: column;
+    }
+
 }
