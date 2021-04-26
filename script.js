@@ -1,18 +1,23 @@
 let myLibrary = [];
-myLibrary.push(new Book("Hunger Games", "Suzanne Collins", 374, "Fiction", true))
-myLibrary.push(new Book ("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false))
+myLibrary.push(new Book("Simulacra and Simulation", "Jean Baudrillard", 164, "Philosophy", true, "January 28, 2021"))
+myLibrary.push(new Book("Pedagogy of the Oppressed", "Paulo Freire", 176, "Sociology", true, "February 28, 2021" ))
+myLibrary.push(new Book("Ways of Seeing", "John Berger", 166, "Art", true, "March 23, 2021"))
+myLibrary.push(new Book("Plato: Five Dialogues", "Plato", 168, "Philosophy", true, "April 6, 2021"))
+myLibrary.push(new Book("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false, "April 25, 2021"))
 
 
 // constructor
-function Book(title, author, pages, genre, isRead) {
+function Book(title, author, pages, genre, isRead, dateEntered) {
     this.title = title
     this.author = author
     this.pages = pages
     this.isRead = isRead
     this.genre = genre
+    this.dateEntered = dateEntered;
+
 }
 
-Book.prototype.dateEntered = function() {
+function getTodaysDate() {
     const newDate = new Date();
     const monthName = newDate.toLocaleString("default", { month: "long" });
     return `${monthName} ${newDate.getDate()}, ${newDate.getFullYear()}`;
@@ -28,33 +33,40 @@ function readForm() {
         e.preventDefault();
         const title = e.target[1].value;
         const author = e.target[0].value;
-        const pages = e.target[2].value;
+        const pages = Number(String(e.target[2].value).replace(/^0+/, ''));
+        
         const genre = e.target[3].value;
         let isRead;
-        console.log(e);
         if (e.target[4].checked === true) {
             isRead = true;
         } else {
             isRead = false;
         }
-        console.log(title, author, pages, genre, isRead)
-        addBookToLibrary(title, author, pages, genre, isRead);
+        const todaysDate = getTodaysDate()
+        addBookToLibrary(title, author, pages, genre, isRead, todaysDate);
         form.reset();
         swapPages();
     });
 }
 
-function addBookToLibrary(title, author, pages, genre, isRead) {
-    const newBook = new Book(title, author, pages, genre, isRead);
+function addBookToLibrary(title, author, pages, genre, isRead, todaysDate) {
+    const newBook = new Book(title, author, pages, genre, isRead, todaysDate);
     myLibrary.push(newBook);
     displayBook(newBook);
+    //save to local storage
+    if (storageAvailable('localStorage')) {
+        localStorage.setObj('myLibrary', JSON.stringify(myLibrary));
+    }
  }
 
 function displayLibrary() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        // create elements and assign classes/src
-        displayBook(myLibrary[i]);
+    if (storageAvailable('localStorage')) {
+        const storedLibrary = JSON.parse(localStorage.getObj('myLibrary'));
+        if (storedLibrary) {
+            myLibrary = storedLibrary;
+        }
     }
+    myLibrary.forEach(book => displayBook(book));    
 }
 
 function displayBook(book) {
@@ -89,7 +101,12 @@ function displayBook(book) {
     subFieldDiv.className = "sub-field";
     const dateDiv = document.createElement('div');
     dateDiv.className = "date";
-    dateDiv.textContent = book.dateEntered();
+    if (book.dateManuallyEntered) {
+        dateDiv.textContent = book.dateManuallyEntered;
+    } else {
+        dateDiv.textContent = book.dateEntered;
+    }
+    
     const readDiv = document.createElement('div');
     readDiv.className = "read";
 
@@ -138,6 +155,10 @@ function updateReadStatus(e) {
         e.target.setAttribute('src', "images/unchecked.png");
         book.isRead = false;
     }
+
+    if (storageAvailable('localStorage')) {
+        localStorage.setObj('myLibrary', JSON.stringify(myLibrary));
+    }
 }
 
 function deleteBook(e) {
@@ -146,18 +167,19 @@ function deleteBook(e) {
     const index = myLibrary.indexOf(book);
     if (confirm(`Do you want to delete ${book.title}?`)) {
         myLibrary.splice(index, 1);
+        if (storageAvailable('localStorage')) {
+            localStorage.setObj('myLibrary', JSON.stringify(myLibrary));
+        }
         const card = document.querySelector(`.card[data-index="${title}"]`);
         card.style.animationPlayState ='running';
         card.addEventListener('animationend', () => {
             card.remove();
-            console.log(myLibrary);
         })
-        console.log(myLibrary);
     } 
 }
 
 const addButton = document.querySelector('#add-button');
-addButton.addEventListener('click', swapPages); 
+addButton.addEventListener('click', swapPages);
 
 function swapPages() {
     if (addButton.textContent === "Add Book") {
@@ -181,6 +203,41 @@ readLabel.addEventListener('click', (e) => {
         readImg.setAttribute('src', "images/unchecked.png");
     }
 })
+
+//local storage
+function storageAvailable(type) { // from Mozilla Web Docs
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+
+// add methods to Storage prototype to save arrays & objects
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj))
+}
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key))
+}
 
 displayLibrary();
 readForm();
