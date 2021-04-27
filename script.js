@@ -28,7 +28,6 @@ function readForm() {
         const title = e.target[1].value;
         const author = e.target[0].value;
         const pages = Number(String(e.target[2].value).replace(/^0+/, ''));
-        
         const genre = e.target[3].value;
         let isRead;
         if (e.target[4].checked === true) {
@@ -47,7 +46,6 @@ function addBookToLibrary(title, author, pages, genre, isRead, todaysDate) {
     const newBook = new Book(title, author, pages, genre, isRead, todaysDate);
     myLibrary.push(newBook);
     displayBook(newBook);
-    //save to local storage
     if (storageAvailable('localStorage')) {
         localStorage.setObj('myLibrary', JSON.stringify(myLibrary));
     }
