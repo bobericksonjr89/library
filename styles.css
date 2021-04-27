@@ -10,7 +10,6 @@ body {
     background: linear-gradient(to top, white, var(--color-background));
     background-repeat: no-repeat;
     height: 100%;
-
     font-family: 'Courier New', Courier, monospace;
 }
 
@@ -45,7 +44,6 @@ main {
     flex-direction: column;
     border-right: 3px ridge black;
     align-items: center;
-
     position: fixed;
     overflow: auto;
 }
@@ -389,7 +387,7 @@ select:focus {
 
 @media only screen and (max-height: 782px) {
     #add-container {
-        height: calc(100vh - 90px);
+        height: calc(100vh - 5.5em);
         border-right: none;
     }
     

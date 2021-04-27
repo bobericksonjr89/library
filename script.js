@@ -5,7 +5,6 @@ myLibrary.push(new Book("Ways of Seeing", "John Berger", 166, "Art", true, "Marc
 myLibrary.push(new Book("Plato: Five Dialogues", "Plato", 168, "Philosophy", true, "April 6, 2021"))
 myLibrary.push(new Book("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false, "April 25, 2021"))
 
-
 // constructor
 function Book(title, author, pages, genre, isRead, dateEntered) {
     this.title = title
@@ -14,17 +13,12 @@ function Book(title, author, pages, genre, isRead, dateEntered) {
     this.isRead = isRead
     this.genre = genre
     this.dateEntered = dateEntered;
-
 }
 
 function getTodaysDate() {
     const newDate = new Date();
     const monthName = newDate.toLocaleString("default", { month: "long" });
     return `${monthName} ${newDate.getDate()}, ${newDate.getFullYear()}`;
-}
-
-Book.prototype.info = function() {
-    return `${title} by ${author}, ${pages} pages, ${isRead ? 'read already' : 'not read yet'}.`
 }
 
 function readForm() {
@@ -127,7 +121,6 @@ function displayBook(book) {
         imageElement.setAttribute('src', "images/check.png");
     }   
     
-    // throw it all together
     main.appendChild(cardDiv);
     cardDiv.appendChild(textAreaDiv);
     cardDiv.appendChild(stampsAreaDiv);
@@ -178,9 +171,6 @@ function deleteBook(e) {
     } 
 }
 
-const addButton = document.querySelector('#add-button');
-addButton.addEventListener('click', swapPages);
-
 function swapPages() {
     if (addButton.textContent === "Add Book") {
         addButton.textContent = "See Books";
@@ -192,17 +182,6 @@ function swapPages() {
         document.querySelector('#form-main').style.display = "none";
     }
 }
-
-// check button on form
-const readLabel = document.querySelector('#read-label');
-readLabel.addEventListener('click', (e) => {
-    let readImg = readLabel.childNodes[1];
-    if (readImg.getAttribute('src') == "images/unchecked.png") {
-        readImg.setAttribute('src', "images/check.png");
-    } else {
-        readImg.setAttribute('src', "images/unchecked.png");
-    }
-})
 
 //local storage
 function storageAvailable(type) { // from Mozilla Web Docs
@@ -238,6 +217,21 @@ Storage.prototype.setObj = function(key, obj) {
 Storage.prototype.getObj = function(key) {
     return JSON.parse(this.getItem(key))
 }
+
+const addButton = document.querySelector('#add-button');
+addButton.addEventListener('click', swapPages);
+
+// check button on form
+const readLabel = document.querySelector('#read-label');
+readLabel.addEventListener('click', (e) => {
+    let readImg = readLabel.childNodes[1];
+    if (readImg.getAttribute('src') == "images/unchecked.png") {
+        readImg.setAttribute('src', "images/check.png");
+    } else {
+        readImg.setAttribute('src', "images/unchecked.png");
+    }
+})
+
 
 displayLibrary();
 readForm();
