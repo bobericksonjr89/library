@@ -361,6 +361,7 @@ select:focus {
     }
 
     button {
+        width: 8em;
         font-size: 1.75 em;
     }
 
@@ -393,7 +394,7 @@ select:focus {
     }
 
 }
-
+/*
 @media only screen and (max-height: 782px) {
     #add-container {
         height: calc(100vh - 5.5em);
@@ -409,3 +410,4 @@ select:focus {
         border-left: 3px ridge black;
     }
 }
+*/
