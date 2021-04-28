@@ -22,6 +22,17 @@ function getTodaysDate() {
 }
 
 function readForm() {
+    // check isRead button on form
+    const readLabel = document.querySelector('#read-label');
+    readLabel.addEventListener('click', (e) => {
+        let readImg = readLabel.childNodes[1];
+        if (readImg.getAttribute('src') == "images/unchecked.png") {
+            readImg.setAttribute('src', "images/check.png");
+        } else {
+            readImg.setAttribute('src', "images/unchecked.png");
+        }
+})
+    
     const form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -217,17 +228,6 @@ Storage.prototype.getObj = function(key) {
 
 const addButton = document.querySelector('#add-button');
 addButton.addEventListener('click', swapPages);
-
-// check button on form
-const readLabel = document.querySelector('#read-label');
-readLabel.addEventListener('click', (e) => {
-    let readImg = readLabel.childNodes[1];
-    if (readImg.getAttribute('src') == "images/unchecked.png") {
-        readImg.setAttribute('src', "images/check.png");
-    } else {
-        readImg.setAttribute('src', "images/unchecked.png");
-    }
-})
 
 displayLibrary();
 readForm();
