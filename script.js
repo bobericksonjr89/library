@@ -36,14 +36,14 @@ function readForm() {
             isRead = false;
         }
         const todaysDate = getTodaysDate()
-        addBookToLibrary(title, author, pages, genre, isRead, todaysDate);
+        const newBook = new Book(title, author, pages, genre, isRead, todaysDate);
+        addBookToLibrary(newBook)
         form.reset();
         swapPages();
     });
 }
 
-function addBookToLibrary(title, author, pages, genre, isRead, todaysDate) {
-    const newBook = new Book(title, author, pages, genre, isRead, todaysDate);
+function addBookToLibrary(newBook) {
     myLibrary.push(newBook);
     displayBook(newBook);
     if (storageAvailable('localStorage')) {
@@ -207,7 +207,6 @@ function storageAvailable(type) { // from Mozilla Web Docs
     }
 }
 
-
 // add methods to Storage prototype to save arrays & objects
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
@@ -229,7 +228,6 @@ readLabel.addEventListener('click', (e) => {
         readImg.setAttribute('src', "images/unchecked.png");
     }
 })
-
 
 displayLibrary();
 readForm();
