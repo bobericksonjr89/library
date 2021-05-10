@@ -1,3 +1,15 @@
+// constructor
+class Book {
+    constructor (title, author, pages, genre, isRead, dateEntered) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.isRead = isRead
+        this.genre = genre
+        this.dateEntered = dateEntered;
+    }
+}
+
 let myLibrary = [];
 myLibrary.push(new Book("Simulacra and Simulation", "Jean Baudrillard", 164, "Philosophy", true, "January 28, 2021"))
 myLibrary.push(new Book("Pedagogy of the Oppressed", "Paulo Freire", 176, "Sociology", true, "February 28, 2021" ))
@@ -5,15 +17,6 @@ myLibrary.push(new Book("Ways of Seeing", "John Berger", 166, "Art", true, "Marc
 myLibrary.push(new Book("Plato: Five Dialogues", "Plato", 168, "Philosophy", true, "April 6, 2021"))
 myLibrary.push(new Book("Passages from Antiquity to Feudalism", "Perry Anderson", 304, "History", false, "April 25, 2021"))
 
-// constructor
-function Book(title, author, pages, genre, isRead, dateEntered) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.isRead = isRead
-    this.genre = genre
-    this.dateEntered = dateEntered;
-}
 
 function getTodaysDate() {
     const newDate = new Date();

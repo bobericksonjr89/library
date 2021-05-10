@@ -15,7 +15,7 @@ User is able to refresh page, close & reopen browser, and close page and return 
 
 ## Object Constructor
 
-Book items are objects created using a constructor. Date added is dynanically generated with the Date constructor.
+Book items are objects created using a class. Date added is dynanically generated with the Date constructor.
 
 ## Credit
 
